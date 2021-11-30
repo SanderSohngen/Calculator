@@ -15,6 +15,7 @@ function divideNumbers(a, b) { return Number(a) / Number(b); }
 function concatNumbers(a, b) {return Number(a + "." + b); }
 
 let display = document.querySelector("#result");
+
 const calculator = document.querySelector("#calculator");
 calculator.addEventListener("click", event => {
     const keyID = event.target.id;
@@ -39,38 +40,38 @@ function inputKey(keyID) {
 
 function calculateResult(keyID) {
     const expression = display.textContent;
-    let ans = separeteString(expression);
+    const formatedExpression = formatString(expression);
+    const answer = getResult(formatedExpression);
+    display.textContent = answer;
+}
+
+function formatString(expression) {
+    let formated = [];
+    let number = "";
+    for (let i = 0; i < expression.length; i++) {
+        if (numbers.includes(Number(expression[i]))) number += expression[i];
+        else {
+            formated.push(number);
+            number = "";
+            formated.push(expression[i]);
+        }
+    }
+    formated.push(number);
+    return formated;
+}
+
+function getResult (formatedExpression) {
+    let ans = formatedExpression
     while(ans.length > 1) {
         const firstDigit = ans.shift();
         const operator = ans.shift();
         const secondDigit = ans.shift();
         const result = operations[operator](firstDigit, secondDigit);
-        if (result === Infinity) {
-            display.textContent = "Cheeky, you can't do that.";
-            return;
-        }
+        if (!Number.isFinite(result)) return "Cheeky, you can't do that.";
         ans.unshift(result);
     }
-    display.textContent = ans.pop();
+    return ans.pop()
 }
-
-function separeteString(string) {
-    let arr = [];
-    let number = "";
-    for (let i = 0; i < string.length; i++) {
-        if (numbers.includes(Number(string[i]))) number += string[i];
-        else {
-            arr.push(number);
-            number = "";
-            arr.push(string[i]);
-        }
-    }
-    arr.push(number);
-    return arr;
-}
-
-// const string = "45+37/5+3";
-// console.log(separeteString(string));
 
 
 //TODO: use reduce when evaluation expression
