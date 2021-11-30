@@ -1,57 +1,39 @@
-function operate(a, operator, b) { return operations[operator](a, b); }
-
-const operations = {
-    "+": addNumbers,
-    "-": subtractNumbers,
-    "*": multiplyNumbers,
-    "/": divideNumbers,
-    ".": concatNumbers,
-}
-
-function addNumbers(a, b) { return Number(a) + Number(b); }
-function subtractNumbers(a, b) {return Number(a) - Number(b); }
-function multiplyNumbers(a, b) { return Number(a) * Number(b); }
-function divideNumbers(a, b) { return Number(a) / Number(b); }
-function concatNumbers(a, b) {return Number(a + "." + b); }
-
-let display = document.querySelector("#result");
-
 const calculator = document.querySelector("#calculator");
 calculator.addEventListener("click", event => {
     const keyID = event.target.id;
     if (buttons[keyID]) buttons[keyID](keyID);
-})
+});
 document.addEventListener("keydown", event => {
     const keyID = event.key;
     console.log(keyID);
     if (buttons[keyID]) buttons[keyID](keyID);
-})
+});
 
 const buttons = {
     Clear: clearAll,
     Backspace: deleteLast,
-    Enter : calculateResult
+    Enter : displayResult
 };
-const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-const operators = ["+", "-", "*", "/", "."]
+const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const operators = ["+", "-", "*", "/", "."];
 const keys = [...numbers, ...operators];
 keys.forEach(key => buttons[key] = inputKey);
+const display = document.querySelector("#result");
 
 function clearAll(keyID) { display.textContent = 0}
 function deleteLast(keyID) { display.textContent = display.textContent.split("").slice(0, -1).join(""); }
 function inputKey(keyID) {
     display.textContent = display.textContent == 0 ? keyID : display.textContent + keyID;
 }
-
-function calculateResult(keyID) {
+function displayResult(keyID) {
     const expression = display.textContent;
-    const formatedExpression = formatString(expression);
-    const answer = getResult(formatedExpression);
+    const formatedExpression = formatExpression(expression);
+    const answer = calculateResult(formatedExpression);
     display.textContent = answer;
 }
 
-function formatString(expression) {
-    let formated = [];
+function formatExpression(expression) {
+    const formated = [];
     let number = "";
     for (let i = 0; i < expression.length; i++) {
         if (numbers.includes(Number(expression[i]))) number += expression[i];
@@ -65,8 +47,8 @@ function formatString(expression) {
     return formated;
 }
 
-function getResult (formatedExpression) {
-    let ans = formatedExpression
+function calculateResult(formatedExpression) {
+    const ans = formatedExpression
     while(ans.length > 1) {
         const firstDigit = ans.shift();
         const operator = ans.shift();
@@ -77,3 +59,16 @@ function getResult (formatedExpression) {
     }
     return ans.pop()
 }
+
+const operations = {
+    "+": addNumbers,
+    "-": subtractNumbers,
+    "*": multiplyNumbers,
+    "/": divideNumbers,
+    ".": concatNumbers,
+}
+function addNumbers(a, b) { return Number(a) + Number(b); }
+function subtractNumbers(a, b) {return Number(a) - Number(b); }
+function multiplyNumbers(a, b) { return Number(a) * Number(b); }
+function divideNumbers(a, b) { return Number(a) / Number(b); }
+function concatNumbers(a, b) {return Number(a + "." + b); }
