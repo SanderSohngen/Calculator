@@ -5,7 +5,6 @@ calculator.addEventListener("click", event => {
 });
 document.addEventListener("keydown", event => {
     const keyID = event.key;
-    console.log(keyID);
     if (buttons[keyID]) buttons[keyID](keyID);
 });
 
