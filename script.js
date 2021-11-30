@@ -72,6 +72,3 @@ function getResult (formatedExpression) {
     }
     return ans.pop()
 }
-
-
-//TODO: use reduce when evaluation expression
