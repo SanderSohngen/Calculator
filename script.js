@@ -21,11 +21,16 @@ calculator.addEventListener("click", event => {
     const keyID = event.target.id;
     if (buttons[keyID]) buttons[keyID](keyID);
 })
+document.addEventListener("keydown", event => {
+    const keyID = event.key;
+    if (buttons[keyID]) buttons[keyID](keyID);
+})
 
 const buttons = {
     clear: clearAll,
     backspace: deleteLast,
-    "=" : calculateResult
+    "=" : calculateResult,
+    Enter : calculateResult
 };
 const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 const operators = ["+", "-", "*", "/", "."]
