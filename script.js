@@ -23,13 +23,13 @@ calculator.addEventListener("click", event => {
 })
 document.addEventListener("keydown", event => {
     const keyID = event.key;
+    console.log(keyID);
     if (buttons[keyID]) buttons[keyID](keyID);
 })
 
 const buttons = {
     clear: clearAll,
-    backspace: deleteLast,
-    "=" : calculateResult,
+    Backspace: deleteLast,
     Enter : calculateResult
 };
 const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
