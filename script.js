@@ -28,7 +28,7 @@ document.addEventListener("keydown", event => {
 })
 
 const buttons = {
-    clear: clearAll,
+    Clear: clearAll,
     Backspace: deleteLast,
     Enter : calculateResult
 };
