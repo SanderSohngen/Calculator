@@ -22,6 +22,7 @@ const display = document.querySelector("#result");
 function clearAll(keyID) { display.textContent = 0}
 function deleteLast(keyID) { display.textContent = display.textContent.split("").slice(0, -1).join(""); }
 function inputKey(keyID) {
+    if(display.textContent.length >= 30) return;
     display.textContent = display.textContent == 0 ? keyID : display.textContent + keyID;
 }
 function displayResult(keyID) {
